@@ -1,0 +1,25 @@
+services:
+  # Serviço do Node.js
+  app:
+    build: .
+    container_name: node_container
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app  
+      - /usr/src/client/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - db
+  # Serviço do PostgreSQL
+  db:
+    image: postgres:17
+    container_name: postgres_container
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
